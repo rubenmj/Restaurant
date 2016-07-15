@@ -1,0 +1,19 @@
+1. Select countries where a total number of inhabitants (population) in all cities is greater than 400.
+
+SELECT co.Name, SUM( ci.Population ) AS total
+FROM country co, city ci
+WHERE co.CountryID=ci.CountryID 
+GROUP BY co.CountryID
+HAVING total>400;
+
+
+2. Select names of the countries that have no buildings at all.
+
+SELECT Name
+FROM country
+WHERE CountryID NOT IN(
+	SELECT co.CountryID
+	FROM country co, city ci, building b
+	WHERE co.CountryID=ci.CountryID
+	AND ci.CityID=b.CityID
+	GROUP BY co.CountryID);
